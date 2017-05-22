@@ -1,0 +1,33 @@
+<div ng-cloak>
+    <md-toolbar md-scroll-shrink ng-if="true">
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Back" back-button ng-href="#">
+                <md-icon><i class="material-icons">arrow_back</i></md-icon>
+            </md-button>
+
+            <md-truncate style="position: absolute; left: 45px; right: 170px; top: 13px; bottom: 13px;">{{ title }}
+            </md-truncate>
+        </div>
+    </md-toolbar>
+
+    <div ng-show="url.data.length">
+        <md-content md-theme="dark" layout-padding>
+            <md-input-container md-no-float class="md-block" style="margin:0">
+                <md-icon><i class="material-icons">search</i></md-icon>
+                <input ng-model="searchArticle" type="text" placeholder="Buscar art&iacute;culo">
+            </md-input-container>
+        </md-content>
+
+        <md-list>
+            <md-list-item class="md-3-line" ng-repeat="article in url.data | filter:searchArticle" href="{{ article.link }}" target="_blank">
+                <div class="md-list-item-text">
+                    <h3>{{ article.title }}</h3>
+                    <h4>{{ article.description | limitTo:100 }} {{article.description.length > 100 ? '...' : ''}}</h4>
+                    <p>{{ article.date | date:'MMM d, y h:mm a'}}</p>
+                </div>
+
+                <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+        </md-list>
+    </div>
+</div>

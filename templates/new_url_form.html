@@ -1,0 +1,27 @@
+<div ng-cloak>
+    <md-toolbar md-scroll-shrink ng-if="true">
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Back" back-button ng-href="#">
+                <md-icon><i class="material-icons">arrow_back</i></md-icon>
+            </md-button>
+
+            <md-truncate style="position: absolute; left: 45px; right: 170px; top: 13px; bottom: 13px;">{{ title }}
+            </md-truncate>
+        </div>
+    </md-toolbar>
+
+    <md-content layout-padding>
+        <form ng-submit="saveUrl()">
+            <md-input-container class="md-block">
+                <label>URL</label>
+                <input type="text" ng-model="url.domain" title="domain" required>
+            </md-input-container>
+
+            <div layout="column" layout-align="center center">
+                <md-button type="submit" class="md-raised md-primary">Agregar URL</md-button>
+            </div>
+        </form>
+    </md-content>
+</div>
+
+

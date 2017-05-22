@@ -1,0 +1,39 @@
+<div ng-cloak>
+    <md-toolbar md-scroll-shrink ng-if="true">
+        <div class="md-toolbar-tools">
+            <md-truncate style="position: absolute; left: 15px; right: 170px; top: 13px; bottom: 13px;">{{ title }}
+            </md-truncate>
+
+            <span flex></span>
+
+            <md-button class="md-icon-button" ng-show="urlList.length" ui-sref="list">
+                <i class="material-icons">settings</i>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <div ng-show="urlList.length">
+        <md-content md-theme="dark" layout-padding>
+            <md-input-container md-no-float class="md-block" style="margin:0">
+                <md-icon><i class="material-icons">search</i></md-icon>
+                <input ng-model="searchFeed" type="text" placeholder="Buscar feed">
+            </md-input-container>
+        </md-content>
+
+        <md-list>
+            <md-list-item ng-repeat="url in urlList | filter:searchFeed" ui-sref="details({id: url.id})">
+                <div class="md-list-item-text">
+                    <p>{{ url.domain }}</p>
+                </div>
+
+                <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+        </md-list>
+    </div>
+
+    <div layout="column" layout-align="center center" style="min-height: 500px" ng-show="!urlList.length">
+        <p>A&uacute;n no has agregado ning&uacute;n feed. ¿Por qu&eacute; no a&ntilde;ades uno?</p>
+        <md-button class="text-center md-raised md-primary" ui-sref="list">Agregar feeds
+        </md-button>
+    </div>
+</div>
