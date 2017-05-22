@@ -16,14 +16,13 @@ angular.module("app")
         $scope.title = "Artículos";
         $scope.url = UrlResource.get({id: $stateParams.id});
     })
-    .controller("UrlListController", function ($scope, UrlResource, urlStorage, $location) {
-        $scope.title = "Mis feeds";
-        $scope.urlList = UrlResource.query();
+    .controller("UrlListController", function ($scope, UrlResource, urlStorage, $location, $q) {
+        $scope.title = "Actualizar feeds";
+
         $scope.urlStorage = urlStorage;
         $scope.selectedUrls = []; // URLs que serán almacenadas en el storage de Chrome
 
         $scope.continue = function () {
-            $scope.selectedUrls.forEach($scope.urlStorage.add);
             $location.path('/');
         };
 
@@ -32,13 +31,31 @@ angular.module("app")
 
             if (index > -1) {
                 list.splice(index, 1);
+                $scope.urlStorage.remove(item);
             } else {
                 list.push(item);
+                $scope.urlStorage.add(item);
             }
         };
 
         $scope.exists = function (item, list) {
             return list.indexOf(item) > -1;
+        };
+
+        $scope.populateChecklist = function () {
+            $q.all([
+                UrlResource.query().$promise
+            ]).then(function (response) {
+                $scope.urlList = response[0];
+
+
+                $scope.urlList.forEach(function (item) {
+                    if ($scope.urlStorage.exists(item)) {
+                        console.log('test');
+                        $scope.selectedUrls.push(item);
+                    }
+                });
+            });
         };
     })
     .controller("NewUrlController", function ($scope, UrlResource) {

@@ -29,21 +29,31 @@ angular.module('app')
         };
 
         this.add = function (url) {
-            console.log(url);
+            if (!this.exists(url)) {
+                var newUrl = {
+                    id: url.id,
+                    domain: url.domain
+                };
 
-            var newUrl = {
-                id: url.id,
-                domain: url.domain
-            };
-
-            _this.data.push(newUrl);
-            _this.sync();
+                _this.data.push(newUrl);
+                _this.sync();
+            }
         };
 
         this.remove = function (url) {
             this.data.splice(this.data.indexOf(url), 1);
             this.sync();
-        }
+        };
+
+        this.exists = function (url) {
+            for(var i = 0; i < this.data.length; i++) {
+                if (this.data[i].id == url.id) {
+                    return true;
+                }
+            }
+
+            return false;
+        };
     })
     .factory('UrlResource', function ($resource, $httpParamSerializerJQLike) {
         return $resource(
