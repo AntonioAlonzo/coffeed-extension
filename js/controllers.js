@@ -16,7 +16,7 @@ angular.module("app")
         $scope.title = "Artículos";
         $scope.url = UrlResource.get({id: $stateParams.id});
     })
-    .controller("UrlListController", function ($scope, UrlResource, urlStorage) {
+    .controller("UrlListController", function ($scope, UrlResource, urlStorage, $location) {
         $scope.title = "Mis feeds";
         $scope.urlList = UrlResource.query();
         $scope.urlStorage = urlStorage;
@@ -24,6 +24,7 @@ angular.module("app")
 
         $scope.continue = function () {
             $scope.selectedUrls.forEach($scope.urlStorage.add);
+            $location.path('/');
         };
 
         $scope.toggle = function (item, list) {
